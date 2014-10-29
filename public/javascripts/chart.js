@@ -4,10 +4,11 @@
 var foo = {};
 
 foo.chart = function (svg, opts) {
-  opts = opts || {};
-  opts.barSpacing = opts.barSpacing || 0.125;
-  opts.verticalMargin = opts.verticalMargin || 16;
-  opts.rightMargin = opts.rightMargin || 48;
+  opts = $.extend({
+    barSpacing: 0.125,
+    verticalMargin: 16,
+    rightMargin: 48
+  }, opts);
 
   var width,
     height,
