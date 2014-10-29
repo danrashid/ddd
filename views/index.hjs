@@ -1,0 +1,10 @@
+{{<base}}
+  {{$scripts}}
+    <script type="text/javascript" src="/javascripts/index.js"></script>
+  {{/scripts}}
+  {{$content}}
+    <h1>{{ title }}</h1>
+    <p>Welcome to {{ title }}</p>
+    <svg />
+  {{/content}}
+{{/base}}

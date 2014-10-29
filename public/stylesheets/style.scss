@@ -1,0 +1,19 @@
+@import 'compass/css3';
+@import 'base';
+
+svg {
+  width: 100%;
+  height: 300px;
+}
+
+.hotspot {
+  fill: WhiteSmoke;
+}
+
+.bar {
+  fill: Turquoise;
+}
+
+.axis .domain {
+  display: none;
+}

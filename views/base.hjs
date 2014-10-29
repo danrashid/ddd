@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <script type="text/javascript" src="/javascripts/vendor/d3-3.4.13.min.js"></script>
+    <script type="text/javascript" src="/javascripts/vendor/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/javascripts/vendor/template-3.0.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/chart.js"></script>
+    {{$scripts}}{{/scripts}}
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    {{$content}}{{/content}}
+  </body>
+</html>
