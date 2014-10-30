@@ -1,4 +1,4 @@
-/* global $, d3, foo */
+/* global $, d3, foo, templates */
 'use strict';
 
 $(function () {
@@ -26,5 +26,5 @@ $(function () {
       {name: 'bar'},
       {name: 'baz'}
     ]
-  }))
+  }));
 });
