@@ -19,4 +19,12 @@ $(function () {
       .datum(res)
       .call(foo.chart);
   });
+
+  $('#things').html(templates.things.render({
+    things: [
+      {name: 'foo'},
+      {name: 'bar'},
+      {name: 'baz'}
+    ]
+  }))
 });

@@ -8,5 +8,6 @@
     <svg id="first" />
     <svg id="second" />
     <svg id="third" />
+    <ul id="things"></ul>
   {{/content}}
 {{/base}}
