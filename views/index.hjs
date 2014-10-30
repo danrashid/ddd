@@ -5,6 +5,8 @@
   {{$content}}
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
-    <svg />
+    <svg id="first" />
+    <svg id="second" />
+    <svg id="third" />
   {{/content}}
 {{/base}}
