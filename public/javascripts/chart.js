@@ -76,13 +76,13 @@ foo.chart = function (svg, opts) {
       .tickValues([0, yMax]);
 
     svg.select('.axis')
-      .attr('transform', 'translate(' + (width - opts.rightMargin) + ',' + opts.verticalMargin + ')')
+      .attr('transform', 'translate(' + width + ',' + opts.verticalMargin + ')')
       .call(axisFn);
   }
 
   function setWidths(svg) {
     width = $(svg.node()).width() - opts.rightMargin;
-    xScale.rangeRoundBands([0, width - opts.rightMargin], opts.barSpacing);
+    xScale.rangeRoundBands([0, width], opts.barSpacing);
   }
 
   (function () {
