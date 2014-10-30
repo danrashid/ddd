@@ -9,8 +9,8 @@ Running it
 ```bash
 bundle install
 npm install
-DEBUG=ddd ./bin/www
+npm start
 ```
-[http://localhost:3000/](http://localhost:3000/)
+[Visit http://localhost:3000/](http://localhost:3000/)
 
 Try resizing the window!
