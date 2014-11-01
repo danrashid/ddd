@@ -9,5 +9,10 @@
     <svg id="second" />
     <svg id="third" />
     <ul id="things"></ul>
+    <script type="text/javascript" src="/javascripts/vendor/foundation.js"></script>
+    <script type="text/javascript" src="/javascripts/vendor/foundation.dropdown.js"></script>
+    <script type="text/javascript">
+      $(document).foundation();
+    </script>
   {{/content}}
 {{/base}}
