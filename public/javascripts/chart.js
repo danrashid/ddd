@@ -13,6 +13,7 @@ foo.chart = function (svg, opts) {
   var width,
     height,
     xScale,
+    yMax,
     yScale;
 
   function appendHotspots(g) {
@@ -62,14 +63,14 @@ foo.chart = function (svg, opts) {
       .call(sizeRects);
   }
 
-  function appendAxis(svg, yMax) {
+  function appendAxis(svg) {
     svg.append('g')
       .attr('class', 'axis');
 
-    sizeAxis(svg, yMax);
+    sizeAxis(svg);
   }
 
-  function sizeAxis(svg, yMax) {
+  function sizeAxis(svg) {
     var x = xScale(svg.datum().length - 1) + xScale.rangeBand(),
       axisFn = d3.svg.axis()
         .scale(yScale)
@@ -87,14 +88,14 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    var yMax = d3.max(svg.datum(), function (d) {
-      return d[1];
-    });
-
     height = $(svg.node()).height() - opts.verticalMargin * 2;
 
     xScale = d3.scale.ordinal()
       .domain(d3.range(svg.datum().length));
+
+    yMax = d3.max(svg.datum(), function (d) {
+      return d[1];
+    });
 
     yScale = d3.scale.linear()
       .domain([0, yMax])
@@ -103,13 +104,13 @@ foo.chart = function (svg, opts) {
     svg
       .call(setWidths)
       .call(appendGroups)
-      .call(appendAxis, yMax);
+      .call(appendAxis);
 
     $(window).on('resize', function () {
       svg
         .call(setWidths)
         .call(sizeGroups)
-        .call(sizeAxis, yMax);
+        .call(sizeAxis);
     });
   })();
 };
