@@ -70,13 +70,14 @@ foo.chart = function (svg, opts) {
   }
 
   function sizeAxis(svg, yMax) {
-    var axisFn = d3.svg.axis()
-      .scale(yScale)
-      .orient('right')
-      .tickValues([0, yMax]);
+    var x = xScale(svg.datum().length - 1) + xScale.rangeBand(),
+      axisFn = d3.svg.axis()
+        .scale(yScale)
+        .orient('right')
+        .tickValues([0, yMax]);
 
     svg.select('.axis')
-      .attr('transform', 'translate(' + width + ',' + opts.verticalMargin + ')')
+      .attr('transform', 'translate(' + x + ',' + opts.verticalMargin + ')')
       .call(axisFn);
   }
 
