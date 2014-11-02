@@ -5,6 +5,16 @@ svg {
   height: 200px;
 }
 
+.group {
+  cursor: pointer;
+}
+.group:hover .hotspot {
+  fill: Gainsboro;
+}
+.group:hover .bar {
+  fill: DarkCyan;
+}
+
 .hotspot {
   fill: WhiteSmoke;
 }

@@ -48,7 +48,12 @@ foo.chart = function (svg, opts) {
   function appendGroups(svg) {
     svg.selectAll('g').data(svg.datum())
       .enter().append('g')
-        .attr('class', 'group')
+        .attr({
+          class: 'group',
+          'data-dropdown': 'tooltip',
+          'aria-controls': 'tooltip',
+          'aria-expanded': 'false'
+        })
         .call(appendHotspots)
         .call(appendBars);
 

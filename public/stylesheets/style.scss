@@ -7,6 +7,19 @@ svg {
   height: 200px;
 }
 
+.group {
+  cursor: pointer;
+
+  &:hover {
+    .hotspot {
+      fill: Gainsboro;
+    }
+    .bar {
+      fill: DarkCyan;
+    }
+  }
+}
+
 .hotspot {
   fill: WhiteSmoke;
 }
