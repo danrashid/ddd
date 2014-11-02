@@ -1,4 +1,5 @@
 .sass-cache
+public/stylesheets/vendor/foundation/**/*.css
 
 # Logs
 logs

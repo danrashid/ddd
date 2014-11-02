@@ -9,6 +9,7 @@
     <script type="text/javascript" src="/javascripts/chart.js"></script>
     <script type="text/javascript" src="/javascripts/templates.js"></script>
     {{$scripts}}{{/scripts}}
+    <link rel="stylesheet" href="/stylesheets/vendor/normalize.css" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
