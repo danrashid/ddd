@@ -32,6 +32,8 @@ svg {
 }
 
 #tooltip {
+  @include dropdown-container($content:content, $triangle:bottom);
+
   &:focus {
     outline-style: none;
   }

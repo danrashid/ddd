@@ -3,6 +3,7 @@
 
 $(function () {
   var $tooltip = $('#tooltip'),
+    fDropdownBorderWidth = 1,
     fDropdownTriangleSideOffset = 10,
     fDropdownTriangleSize = 6,
     groupBoundingBox;
@@ -41,17 +42,23 @@ $(function () {
 
     groupBoundingBox = group.node().getBBox();
 
-    $tooltip.html(templates.tooltip.render({
-      info: datum[1] + ' things',
-      from: (new Date(+datum[0])).toLocaleString(),
-      to: (new Date(+datum[0] + 1000)).toLocaleString()
-    }));
+    $tooltip
+      .toggleClass('right', group.classed('right'))
+      .html(templates.tooltip.render({
+        info: datum[1] + ' things',
+        from: (new Date(+datum[0])).toLocaleString(),
+        to: (new Date(+datum[0] + 1000)).toLocaleString()
+      }));
   });
 
   $tooltip.on('opened.fndtn.dropdown', function () {
+    var marginLeft = $tooltip.hasClass('right') ?
+      -$tooltip.outerWidth() + fDropdownTriangleSideOffset + fDropdownTriangleSize + groupBoundingBox.width / 2:
+      -fDropdownBorderWidth - fDropdownTriangleSideOffset - fDropdownTriangleSize + groupBoundingBox.width / 2;
+
     $tooltip.css({
       'margin-top': groupBoundingBox.height + fDropdownTriangleSize,
-      'margin-left': groupBoundingBox.width / 2 - fDropdownTriangleSideOffset - fDropdownTriangleSize
+      'margin-left': marginLeft
     });
   });
 
