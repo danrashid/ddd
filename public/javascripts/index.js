@@ -2,6 +2,8 @@
 'use strict';
 
 $(function () {
+  var $tooltip = $('#tooltip');
+
   $.when(
     $.get('/stats/?max=1000', function (res) {
       d3.select('#first')
@@ -29,4 +31,15 @@ $(function () {
       {name: 'baz'}
     ]
   }));
+
+  $(document).on('click', '.group', function() {
+    var group = d3.select(this),
+      datum = group.datum();
+
+    $tooltip.html(templates.tooltip.render({
+      info: datum[1] + ' things',
+      from: (new Date(+datum[0])).toLocaleString(),
+      to: (new Date(+datum[0] + 1000)).toLocaleString()
+    }));
+  });
 });

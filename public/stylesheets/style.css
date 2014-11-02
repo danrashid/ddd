@@ -26,3 +26,10 @@ svg {
 .axis .domain {
   display: none;
 }
+
+#tooltip:focus {
+  outline-style: none;
+}
+#tooltip h4 {
+  color: DarkCyan;
+}

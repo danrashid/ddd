@@ -9,7 +9,7 @@
     <svg id="second" />
     <svg id="third" />
     <ul id="things"></ul>
-    <div id="tooltip" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1"></div>
+    <div id="tooltip" data-dropdown-content class="f-dropdown content small" aria-hidden="true" tabindex="-1"></div>
     <script type="text/javascript" src="/javascripts/vendor/foundation.js"></script>
     <script type="text/javascript" src="/javascripts/vendor/foundation.dropdown.js"></script>
     <script type="text/javascript">

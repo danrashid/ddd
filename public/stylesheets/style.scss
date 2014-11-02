@@ -31,3 +31,12 @@ svg {
 .axis .domain {
   display: none;
 }
+
+#tooltip {
+  &:focus {
+    outline-style: none;
+  }
+  h4 {
+    color: DarkCyan;
+  }
+}
