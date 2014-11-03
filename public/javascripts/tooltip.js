@@ -6,23 +6,23 @@ foo.tooltip = function (sel) {
     fDropdownBorderWidth = 1,
     fDropdownTriangleSideOffset = 10,
     fDropdownTriangleSize = 6,
-    groupBoundingBox;
+    d3TriggerBBox;
 
-  function populate(group, template, values) {
-    groupBoundingBox = group.node().getBBox();
+  function populate(d3Trigger, template, values) {
+    d3TriggerBBox = d3Trigger.node().getBBox();
 
     $tooltip
-      .toggleClass('right', group.classed('right'))
+      .toggleClass('right', d3Trigger.classed('right'))
       .html(template.render(values));
   }
 
   $tooltip.on('opened.fndtn.dropdown', function () {
     var marginLeft = $tooltip.hasClass('right') ?
-      -$tooltip.outerWidth() + fDropdownTriangleSideOffset + fDropdownTriangleSize + groupBoundingBox.width / 2:
-      -fDropdownBorderWidth * 2 - fDropdownTriangleSideOffset - fDropdownTriangleSize + groupBoundingBox.width / 2;
+      -$tooltip.outerWidth() + fDropdownTriangleSideOffset + fDropdownTriangleSize + d3TriggerBBox.width / 2 :
+      -fDropdownBorderWidth * 2 - fDropdownTriangleSideOffset - fDropdownTriangleSize + d3TriggerBBox.width / 2;
 
     $tooltip.css({
-      'margin-top': groupBoundingBox.height + fDropdownTriangleSize,
+      'margin-top': d3TriggerBBox.height + fDropdownTriangleSize,
       'margin-left': marginLeft
     });
   });
