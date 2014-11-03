@@ -8,6 +8,7 @@
     <script type="text/javascript" src="/javascripts/vendor/template-3.0.2.min.js"></script>
     <script type="text/javascript" src="/javascripts/chart.js"></script>
     <script type="text/javascript" src="/javascripts/templates.js"></script>
+    <script type="text/javascript" src="/javascripts/tooltip.js"></script>
     {{$scripts}}{{/scripts}}
     <link rel="stylesheet" href="/stylesheets/vendor/normalize.css" />
     <link rel="stylesheet" href="/stylesheets/style.css" />

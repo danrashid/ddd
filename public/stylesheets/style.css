@@ -404,10 +404,10 @@ svg {
 .group {
   cursor: pointer;
 }
-.group:hover .hotspot {
+.group:hover .hotspot, .group[aria-expanded="true"] .hotspot {
   fill: Gainsboro;
 }
-.group:hover .bar {
+.group:hover .bar, .group[aria-expanded="true"] .bar {
   fill: DarkCyan;
 }
 

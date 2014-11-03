@@ -1,12 +1,8 @@
-/* global $, d3, foo, templates, Foundation */
+/* global $, d3, foo, templates */
 'use strict';
 
 $(function () {
-  var $tooltip = $('#tooltip'),
-    fDropdownBorderWidth = 1,
-    fDropdownTriangleSideOffset = 10,
-    fDropdownTriangleSize = 6,
-    groupBoundingBox;
+  var tooltip = foo.tooltip('#tooltip');
 
   $.when(
     $.get('/stats/?max=1000', function (res) {
@@ -40,29 +36,10 @@ $(function () {
     var group = d3.select(this),
       datum = group.datum();
 
-    groupBoundingBox = group.node().getBBox();
-
-    $tooltip
-      .toggleClass('right', group.classed('right'))
-      .html(templates.tooltip.render({
-        info: datum[1] + ' things',
-        from: (new Date(+datum[0])).toLocaleString(),
-        to: (new Date(+datum[0] + 1000)).toLocaleString()
-      }));
-  });
-
-  $tooltip.on('opened.fndtn.dropdown', function () {
-    var marginLeft = $tooltip.hasClass('right') ?
-      -$tooltip.outerWidth() + fDropdownTriangleSideOffset + fDropdownTriangleSize + groupBoundingBox.width / 2:
-      -fDropdownBorderWidth - fDropdownTriangleSideOffset - fDropdownTriangleSize + groupBoundingBox.width / 2;
-
-    $tooltip.css({
-      'margin-top': groupBoundingBox.height + fDropdownTriangleSize,
-      'margin-left': marginLeft
+    tooltip.populate(group, templates.tooltip, {
+      info: datum[1] + ' things',
+      from: (new Date(+datum[0])).toLocaleString(),
+      to: (new Date(+datum[0] + 1000)).toLocaleString()
     });
-  });
-
-  $(window).on('resize', function () {
-    Foundation.libs.dropdown.close($tooltip);
   });
 });

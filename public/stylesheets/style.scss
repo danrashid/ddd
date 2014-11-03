@@ -9,7 +9,8 @@ svg {
 .group {
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &[aria-expanded="true"] {
     .hotspot {
       fill: Gainsboro;
     }
