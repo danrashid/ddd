@@ -1,27 +1,34 @@
-/* global $, d3, foo, templates */
+/* global $, d3, Foundation, foo, templates */
 'use strict';
 
 $(function () {
-  var tooltip = foo.tooltip('#tooltip');
+  var tooltipId = 'tooltip',
+    tooltip = foo.tooltip(tooltipId);
 
   $.when(
     $.get('/stats/?max=1000', function (res) {
       d3.select('#first')
         .datum(res)
-        .call(foo.chart);
+        .call(foo.chart, {
+          tooltipId: tooltipId
+        });
     }),
     $.get('/stats/?max=500', function (res) {
       d3.select('#second')
         .datum(res)
-        .call(foo.chart);
+        .call(foo.chart, {
+          tooltipId: tooltipId
+        });
     }),
     $.get('/stats/', function (res) {
       d3.select('#third')
         .datum(res)
-        .call(foo.chart);
+        .call(foo.chart, {
+          tooltipId: tooltipId
+        });
     })
   ).done(function () {
-    $(document).foundation('dropdown', 'init');
+    Foundation.libs.dropdown.init(tooltip.$el);
   });
 
   $('#things').html(templates.things.render({
@@ -32,14 +39,14 @@ $(function () {
     ]
   }));
 
-  $(document).on('click', '.group', function() {
-    var group = d3.select(this),
-      datum = group.datum();
+  $(document).on('click', 'svg [data-dropdown]', function () {
+    var datum = d3.select(this).datum(),
+      interval = +$(this).closest('svg').attr('interval');
 
-    tooltip.populate(group, templates.tooltip, {
+    tooltip.populate({
       info: datum[1] + ' things',
-      from: (new Date(+datum[0])).toLocaleString(),
-      to: (new Date(+datum[0] + 1000)).toLocaleString()
+      from: (new Date(datum[0])).toLocaleString(),
+      to: (new Date(datum[0] + interval)).toLocaleString()
     });
   });
 });

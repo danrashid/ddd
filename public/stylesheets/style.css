@@ -1781,7 +1781,7 @@ svg {
   font-size: 0.875rem;
   z-index: 89;
   margin-top: 2px;
-  max-width: 200px;
+  max-width: 250px;
 }
 #tooltip > *:first-child {
   margin-top: 0;
@@ -1822,9 +1822,6 @@ svg {
 #tooltip.right:after {
   left: auto;
   right: 9px;
-}
-#tooltip:focus {
-  outline-style: none;
 }
 #tooltip h4 {
   color: DarkCyan;

@@ -1,39 +1,40 @@
-/* global $, foo, Foundation */
+/* global $, d3, foo, Foundation, templates */
 'use strict';
 
-foo.tooltip = function (sel) {
-  var $tooltip = $(sel),
+foo.tooltip = function (tooltipId) {
+  var $el = $('#' + tooltipId),
     fDropdownBorderWidth = 1, // $f-dropdown-border-width
     fDropdownTriangleSize = 6, // $f-dropdown-triangle-size
-    fDropdownTriangleSideOffset = 10, // $f-dropdown-triangle-side-offset
-    d3TriggerBBox;
+    fDropdownTriangleSideOffset = 10; // $f-dropdown-triangle-side-offset
 
-  function populate(d3Trigger, template, values) {
-    d3TriggerBBox = d3Trigger.node().getBBox();
-
-    $tooltip
-      .toggleClass('right', d3Trigger.classed('right'))
-      .html(template.render(values));
+  function populate(values) {
+    $el.html(templates.tooltip.render(values));
   }
 
-  $tooltip.on('opened.fndtn.dropdown', function () {
-    var triangleCenter = fDropdownBorderWidth + fDropdownTriangleSideOffset + fDropdownTriangleSize,
-      barCenter = d3TriggerBBox.width / 2,
-      marginLeft = $tooltip.hasClass('right') ?
-        -$tooltip.outerWidth() + triangleCenter + barCenter :
-        -(triangleCenter) + barCenter;
+  $el.on('opened.fndtn.dropdown', function (e, $dropdown, $trigger) {
+    if (!$trigger) return;
 
-    $tooltip.css({
-      'margin-top': d3TriggerBBox.height + fDropdownTriangleSize,
-      'margin-left': marginLeft
-    });
+    var d3Trigger = d3.select($trigger.get(0)),
+      triggerBBox = d3Trigger.node().getBBox(),
+      triangleCenter = fDropdownBorderWidth + fDropdownTriangleSideOffset + fDropdownTriangleSize,
+      barCenter = triggerBBox.width / 2;
+
+    $el
+      .toggleClass('right', d3Trigger.classed('right'))
+      .css({
+        'margin-top': triggerBBox.height + fDropdownTriangleSize,
+        'margin-left': d3Trigger.classed('right') ?
+          -$el.outerWidth() + triangleCenter + barCenter :
+          -(triangleCenter) + barCenter
+      });
   });
 
   $(window).on('resize', function () {
-    Foundation.libs.dropdown.close($tooltip);
+    Foundation.libs.dropdown.close($el);
   });
 
   return {
+    $el: $el,
     populate: populate
   };
 };

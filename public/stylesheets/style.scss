@@ -35,11 +35,8 @@ svg {
 }
 
 #tooltip {
-  @include dropdown-container($content:content, $triangle:bottom);
+  @include dropdown-container($content:content, $triangle:bottom, $max-width:250px);
 
-  &:focus {
-    outline-style: none;
-  }
   h4 {
     color: DarkCyan;
   }

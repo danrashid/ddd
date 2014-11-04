@@ -49,8 +49,8 @@ foo.chart = function (svg, opts) {
     svg.selectAll('g').data(svg.datum())
       .enter().append('g')
         .attr({
-          'data-dropdown': 'tooltip',
-          'aria-controls': 'tooltip',
+          'data-dropdown': opts.tooltipId,
+          'aria-controls': opts.tooltipId,
           'aria-expanded': 'false'
         })
         .classed({
@@ -98,6 +98,8 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
+    var interval = svg.datum()[1][0] - svg.datum()[0][0];
+
     height = $(svg.node()).height() - opts.verticalMargin * 2;
 
     xScale = d3.scale.ordinal()
@@ -112,6 +114,7 @@ foo.chart = function (svg, opts) {
       .rangeRound([height, 0]);
 
     svg
+      .attr('interval', interval)
       .call(setWidths)
       .call(appendGroups)
       .call(appendAxis);
