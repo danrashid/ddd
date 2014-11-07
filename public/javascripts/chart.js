@@ -10,7 +10,8 @@ foo.chart = function (svg, opts) {
     rightMargin: 48
   }, opts);
 
-  var width,
+  var interval,
+    width,
     height,
     xScale,
     yMax,
@@ -46,13 +47,20 @@ foo.chart = function (svg, opts) {
   }
 
   function appendGroups(svg) {
+    var now = +(new Date());
+
     svg.selectAll('g').data(svg.datum())
       .enter().append('g')
         .attr({
-          'class': 'group',
           'data-dropdown': opts.tooltipId,
           'aria-controls': opts.tooltipId,
           'aria-expanded': 'false'
+        })
+        .classed({
+          group: true,
+          pending: function (d) {
+            return now < d[0] + interval;
+          }
         })
         .call(appendHotspots)
         .call(appendBars);
@@ -93,7 +101,7 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    var interval = svg.datum()[1][0] - svg.datum()[0][0];
+    interval = svg.datum()[1][0] - svg.datum()[0][0];
 
     height = $(svg.node()).height() - opts.verticalMargin * 2;
 

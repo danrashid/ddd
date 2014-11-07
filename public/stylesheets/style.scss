@@ -20,6 +20,15 @@ svg {
       fill: DarkCyan;
     }
   }
+
+  &.pending .bar {
+    fill: Aquamarine;
+
+    &:hover,
+    &[aria-expanded="true"] {
+      fill: MediumSeaGreen;
+    }
+  }
 }
 
 .hotspot {

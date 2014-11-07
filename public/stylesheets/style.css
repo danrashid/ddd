@@ -1753,6 +1753,12 @@ svg {
 .group:hover .bar, .group[aria-expanded="true"] .bar {
   fill: DarkCyan;
 }
+.group.pending .bar {
+  fill: Aquamarine;
+}
+.group.pending .bar:hover, .group.pending .bar[aria-expanded="true"] {
+  fill: MediumSeaGreen;
+}
 
 .hotspot {
   fill: WhiteSmoke;
