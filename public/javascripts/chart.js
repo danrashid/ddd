@@ -49,15 +49,10 @@ foo.chart = function (svg, opts) {
     svg.selectAll('g').data(svg.datum())
       .enter().append('g')
         .attr({
+          'class': 'group',
           'data-dropdown': opts.tooltipId,
           'aria-controls': opts.tooltipId,
           'aria-expanded': 'false'
-        })
-        .classed({
-          group: true,
-          right: function (d, i) {
-            return i > svg.datum().length / 2;
-          }
         })
         .call(appendHotspots)
         .call(appendBars);

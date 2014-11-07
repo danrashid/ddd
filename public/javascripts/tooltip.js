@@ -17,13 +17,14 @@ foo.tooltip = function (tooltipId) {
     var d3Trigger = d3.select($trigger.get(0)),
       triggerBBox = d3Trigger.node().getBBox(),
       triangleCenter = fDropdownBorderWidth + fDropdownTriangleSideOffset + fDropdownTriangleSize,
-      barCenter = triggerBBox.width / 2;
+      barCenter = triggerBBox.width / 2,
+      goMostlyLeft = $trigger.offset().left > window.innerWidth / 2;
 
     $el
-      .toggleClass('right', d3Trigger.classed('right'))
+      .toggleClass('right', goMostlyLeft)
       .css({
         'margin-top': triggerBBox.height + fDropdownTriangleSize,
-        'margin-left': d3Trigger.classed('right') ?
+        'margin-left': goMostlyLeft ?
           -$el.outerWidth() + triangleCenter + barCenter :
           -(triangleCenter) + barCenter
       });

@@ -10,12 +10,12 @@
       </div>
     </div>
     <div class="row">
-      <div class="columns">
+      <div class="columns small-8 end">
         <svg id="first" />
       </div>
     </div>
     <div class="row">
-      <div class="columns">
+      <div class="columns small-8 small-offset-4">
         <svg id="second" />
       </div>
     </div>
