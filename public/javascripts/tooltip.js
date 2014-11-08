@@ -35,7 +35,6 @@ foo.tooltip = function (tooltipId) {
   });
 
   return {
-    $el: $el,
     populate: populate
   };
 };

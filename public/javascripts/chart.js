@@ -1,4 +1,4 @@
-/* global $, d3 */
+/* global $, d3, Foundation */
 'use strict';
 
 var foo = {};
@@ -64,6 +64,10 @@ foo.chart = function (svg, opts) {
         })
         .call(appendHotspots)
         .call(appendBars);
+
+    if (opts.tooltipId) {
+      Foundation.libs.dropdown.init($(opts.tooltipId));
+    }
 
     sizeGroups(svg);
   }
