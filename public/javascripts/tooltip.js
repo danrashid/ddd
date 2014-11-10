@@ -7,7 +7,16 @@ foo.tooltip = function (tooltipId) {
     fDropdownTriangleSize = 6, // $f-dropdown-triangle-size
     fDropdownTriangleSideOffset = 10; // $f-dropdown-triangle-side-offset
 
-  function populate(values) {
+  function populate(trigger, callback) {
+    var datum = d3.select(trigger).datum(),
+      interval = +$(trigger).closest('svg').attr('interval'),
+      defaults = {
+        from: (new Date(datum[0])).toLocaleString(),
+        to: (new Date(datum[0] + interval)).toLocaleString()
+      },
+      overrides = callback ? callback(datum) : {},
+      values = $.extend(defaults, overrides);
+
     $el.html(templates.tooltip.render(values));
   }
 
@@ -18,13 +27,13 @@ foo.tooltip = function (tooltipId) {
       triggerBBox = d3Trigger.node().getBBox(),
       triangleCenter = fDropdownBorderWidth + fDropdownTriangleSideOffset + fDropdownTriangleSize,
       barCenter = triggerBBox.width / 2,
-      goMostlyLeft = $trigger.offset().left > window.innerWidth / 2;
+      goLeft = $trigger.offset().left > window.innerWidth / 2;
 
     $el
-      .toggleClass('right', goMostlyLeft)
+      .toggleClass('right', goLeft)
       .css({
         'margin-top': triggerBBox.height + fDropdownTriangleSize,
-        'margin-left': goMostlyLeft ?
+        'margin-left': goLeft ?
           -$el.outerWidth() + triangleCenter + barCenter :
           -(triangleCenter) + barCenter
       });

@@ -1,4 +1,4 @@
-/* global $, d3, Foundation, foo, templates */
+/* global $, d3, foo, templates */
 'use strict';
 
 $(function () {
@@ -38,13 +38,10 @@ $(function () {
   }));
 
   $(document).on('click', 'svg [data-dropdown]', function () {
-    var datum = d3.select(this).datum(),
-      interval = +$(this).closest('svg').attr('interval');
-
-    tooltip.populate({
-      info: datum[1] + ' things',
-      from: (new Date(datum[0])).toLocaleString(),
-      to: (new Date(datum[0] + interval)).toLocaleString()
+    tooltip.populate(this, function (datum) {
+      return {
+        info: datum[1] + ' things'
+      };
     });
   });
 });
