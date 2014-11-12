@@ -10,13 +10,16 @@ $(function () {
       });
 
   $.get('/stats/?layers=3', function (res) {
-    var foo = stack(res);
-    console.log(foo);
+    // d3.select('#stack')
+    //   .datum(stack(res))
+    //   .call(foo.chart, {
+    //     tooltipId: tooltipId
+    //   });
   });
 
   $.get('/stats/?max=1000', function (res) {
     d3.select('#first')
-      .datum(res[0].values)
+      .datum(res)
       .call(foo.chart, {
         tooltipId: tooltipId
       });
@@ -24,7 +27,7 @@ $(function () {
 
   $.get('/stats/?max=500', function (res) {
     d3.select('#second')
-      .datum(res[0].values)
+      .datum(res)
       .call(foo.chart, {
         tooltipId: tooltipId
       });
@@ -32,7 +35,7 @@ $(function () {
 
   $.get('/stats/', function (res) {
     d3.select('#third')
-      .datum(res[0].values)
+      .datum(res)
       .call(foo.chart, {
         tooltipId: tooltipId
       });

@@ -49,7 +49,7 @@ foo.chart = function (svg, opts) {
   function appendGroups(svg) {
     var now = +(new Date());
 
-    svg.selectAll('g').data(svg.datum())
+    svg.selectAll('g').data(svg.datum()[0].values)
       .enter().append('g')
         .attr({
           'data-dropdown': opts.tooltipId,
@@ -88,7 +88,7 @@ foo.chart = function (svg, opts) {
   }
 
   function sizeAxis(svg) {
-    var x = xScale(svg.datum().length - 1) + xScale.rangeBand(),
+    var x = xScale(svg.datum()[0].values.length - 1) + xScale.rangeBand(),
       axisFn = d3.svg.axis()
         .scale(yScale)
         .orient('right')
@@ -105,16 +105,18 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    interval = svg.datum()[1].x - svg.datum()[0].x;
+    interval = svg.datum()[0].values[1].x - svg.datum()[0].values[0].x;
 
     height = $(svg.node()).height() - opts.verticalMargin * 2;
 
     xScale = d3.scale.ordinal()
-      .domain(d3.range(svg.datum().length));
+      .domain(d3.range(svg.datum()[0].values.length));
 
-    yMax = d3.max(svg.datum(), function (d) {
-      return d.y;
-    });
+    yMax = d3.max(svg.datum()[0].values.map(function (value, i) {
+      return svg.datum().reduce(function (a, b) {
+        return a + b.values[i].y;
+      }, 0);
+    }));
 
     yScale = d3.scale.linear()
       .domain([0, yMax])
