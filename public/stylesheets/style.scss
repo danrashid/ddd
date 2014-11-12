@@ -2,15 +2,24 @@
 @import 'vendor/foundation/components/dropdown';
 $row-width: none;
 @import 'vendor/foundation/components/grid';
+@import 'vendor/foundation/components/type';
 
 svg {
   width: 100%;
   height: 200px;
 }
 
-.group {
-  cursor: pointer;
+#stack {
+  height: 500px;
+}
 
+.group,
+label,
+label input {
+  cursor: pointer;
+}
+
+.group {
   &:hover,
   &[aria-expanded="true"] {
     .hotspot {
@@ -39,8 +48,12 @@ svg {
   fill: Turquoise;
 }
 
-.axis .domain {
-  display: none;
+.axis {
+  fill: $subheader-font-color;
+
+  .domain {
+    display: none;
+  }
 }
 
 #tooltip {

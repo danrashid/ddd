@@ -7,7 +7,7 @@ $(function () {
 
   $.get('/stats/?max=1000', function (res) {
     d3.select('#first')
-      .datum(res)
+      .datum(res[0].values)
       .call(foo.chart, {
         tooltipId: tooltipId
       });
@@ -15,7 +15,7 @@ $(function () {
 
   $.get('/stats/?max=500', function (res) {
     d3.select('#second')
-      .datum(res)
+      .datum(res[0].values)
       .call(foo.chart, {
         tooltipId: tooltipId
       });
@@ -23,17 +23,17 @@ $(function () {
 
   $.get('/stats/', function (res) {
     d3.select('#third')
-      .datum(res)
+      .datum(res[0].values)
       .call(foo.chart, {
         tooltipId: tooltipId
       });
   });
 
-  $('#things').html(templates.things.render({
+  $('#legend').html(templates.things.render({
     things: [
-      {name: 'foo'},
-      {name: 'bar'},
-      {name: 'baz'}
+      {id: 'foo'},
+      {id: 'bar'},
+      {id: 'baz'}
     ]
   }));
 

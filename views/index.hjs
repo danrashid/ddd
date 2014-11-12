@@ -10,23 +10,32 @@
       </div>
     </div>
     <div class="row">
-      <div class="columns small-8 end">
-        <svg id="first" />
+      <div class="columns small-4">
+        <ul id="legend" class="no-bullet"></ul>
+      </div>
+      <div class="columns small-8">
+        <svg id="stack" />
       </div>
     </div>
     <div class="row">
-      <div class="columns small-8 small-offset-4">
+      <div class="columns small-8">
+        <svg id="first" />
+      </div>
+      <div class="columns small-4">
+        <h4 class="subheader">Testing that tooltips pop open toward the center of the screen, regardless of graph position.</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="columns small-4 text-right">
+        <h4 class="subheader">Testing that tooltips pop open toward the center of the screen, regardless of graph position.</h4>
+      </div>
+      <div class="columns small-8">
         <svg id="second" />
       </div>
     </div>
     <div class="row">
       <div class="columns">
         <svg id="third" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="columns">
-        <ul id="things"></ul>
       </div>
     </div>
     <div id="tooltip" data-dropdown-content aria-hidden="true" tabindex="-1"></div>
