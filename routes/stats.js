@@ -13,15 +13,22 @@ var colors = [
   '#17becf'
 ];
 
-function remapCoordinates(data) {
+function preprocess(data) {
   return data.map(function (layer) {
+    var max = 0;
+
     layer.values = layer.values.map(function (value) {
+      max = Math.max(max, value[1]);
+
       return {
         x: value[0],
         y: value[1]
       };
     });
+    layer.max = max;
     return layer;
+  }).sort(function (a, b) {
+    return b.max - a.max;
   });
 }
 
@@ -50,7 +57,7 @@ router.get('/', function(req, res) {
     data.push(layer);
     layers -= 1;
   }
-  res.send(remapCoordinates(data));
+  res.send(preprocess(data));
 });
 
 module.exports = router;

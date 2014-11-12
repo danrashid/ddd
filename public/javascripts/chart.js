@@ -10,7 +10,8 @@ foo.chart = function (svg, opts) {
     rightMargin: 48
   }, opts);
 
-  var interval,
+  var times,
+    interval,
     width,
     height,
     xScale,
@@ -49,7 +50,10 @@ foo.chart = function (svg, opts) {
   function appendGroups(svg) {
     var now = +(new Date());
 
-    svg.selectAll('g').data(svg.datum()[0].values)
+    svg.selectAll('g')
+      .data(function (d) {
+        return d[0].values;
+      })
       .enter().append('g')
         .attr({
           'data-dropdown': opts.tooltipId,
@@ -88,7 +92,7 @@ foo.chart = function (svg, opts) {
   }
 
   function sizeAxis(svg) {
-    var x = xScale(svg.datum()[0].values.length - 1) + xScale.rangeBand(),
+    var x = xScale(times.length - 1) + xScale.rangeBand(),
       axisFn = d3.svg.axis()
         .scale(yScale)
         .orient('right')
@@ -105,14 +109,18 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    interval = svg.datum()[0].values[1].x - svg.datum()[0].values[0].x;
+    times = svg.datum()[0].values.map(function (value) {
+      return value.x;
+    });
+
+    interval = times[1] - times[0];
 
     height = $(svg.node()).height() - opts.verticalMargin * 2;
 
     xScale = d3.scale.ordinal()
-      .domain(d3.range(svg.datum()[0].values.length));
+      .domain(d3.range(times.length));
 
-    yMax = d3.max(svg.datum()[0].values.map(function (value, i) {
+    yMax = d3.max(times.map(function (value, i) {
       return svg.datum().reduce(function (a, b) {
         return a + b.values[i].y;
       }, 0);
