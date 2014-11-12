@@ -22,7 +22,7 @@ foo.chart = function (svg, opts) {
       .attr({
         class: 'hotspot',
         debug: function (d) {
-          return d.join(',');
+          return d.x + ',' + d.y;
         },
         height: height
       });
@@ -33,10 +33,10 @@ foo.chart = function (svg, opts) {
       .attr({
         class: 'bar',
         y: function (d) {
-          return yScale(d[1]);
+          return yScale(d.y);
         },
         height: function (d) {
-          return height - yScale(d[1]);
+          return height - yScale(d.y);
         }
       });
   }
@@ -59,7 +59,7 @@ foo.chart = function (svg, opts) {
         .classed({
           group: true,
           pending: function (d) {
-            return now < d[0] + interval;
+            return now < d.x + interval;
           }
         })
         .call(appendHotspots)
@@ -105,7 +105,7 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    interval = svg.datum()[1][0] - svg.datum()[0][0];
+    interval = svg.datum()[1].x - svg.datum()[0].x;
 
     height = $(svg.node()).height() - opts.verticalMargin * 2;
 
@@ -113,7 +113,7 @@ foo.chart = function (svg, opts) {
       .domain(d3.range(svg.datum().length));
 
     yMax = d3.max(svg.datum(), function (d) {
-      return d[1];
+      return d.y;
     });
 
     yScale = d3.scale.linear()

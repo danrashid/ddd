@@ -3,7 +3,16 @@
 
 $(function () {
   var tooltipId = 'tooltip',
-    tooltip = foo.tooltip(tooltipId);
+    tooltip = foo.tooltip(tooltipId),
+    stack = d3.layout.stack()
+      .values(function (d) {
+        return d.values;
+      });
+
+  $.get('/stats/?layers=3', function (res) {
+    var foo = stack(res);
+    console.log(foo);
+  });
 
   $.get('/stats/?max=1000', function (res) {
     d3.select('#first')
@@ -40,7 +49,7 @@ $(function () {
   $(document).on('click', 'svg [data-dropdown]', function () {
     tooltip.populate(this, function (datum) {
       return {
-        info: datum[1] + ' things'
+        info: datum.y + ' things'
       };
     });
   });
