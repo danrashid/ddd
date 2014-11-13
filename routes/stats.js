@@ -13,23 +13,36 @@ var colors = [
   '#17becf'
 ];
 
+function yTotal(layer) {
+  return layer.values.reduce(function (a, b) {
+    return a + b[1];
+  }, 0);
+}
+
 function preprocess(data) {
-  return data.map(function (layer) {
-    var max = 0;
+  var ret = {};
 
-    layer.values = layer.values.map(function (value) {
-      max = Math.max(max, value[1]);
-
-      return {
-        x: value[0],
-        y: value[1]
-      };
-    });
-    layer.max = max;
-    return layer;
-  }).sort(function (a, b) {
-    return b.max - a.max;
+  data.sort(function (a, b) {
+    return yTotal(b) - yTotal(a);
   });
+
+  ret.layers = data.map(function (layer) {
+    return {
+      id: layer.id,
+      color: layer.color
+    };
+  });
+
+  ret.values = data[0].values.map(function (value, i) {
+    return {
+      x: value[0],
+      y: data.map(function (layer) {
+        return layer.values[i][1];
+      })
+    };
+  });
+
+  return ret;
 }
 
 /* GET stats. */
@@ -48,9 +61,9 @@ router.get('/', function(req, res) {
       color: colors[layers - 1],
       values: []
     };
-    for (i = 0; i < count; i += 1) {
+    for (i = count - 1; i >= 0; i -= 1) {
       layer.values.push([
-        now - count * 1000,
+        now - i * 1000,
         Math.round(Math.random() * max) * layers
       ]);
     }

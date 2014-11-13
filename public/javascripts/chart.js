@@ -52,7 +52,7 @@ foo.chart = function (svg, opts) {
 
     svg.selectAll('g')
       .data(function (d) {
-        return d[0].values;
+        return d.values;
       })
       .enter().append('g')
         .attr({
@@ -109,7 +109,7 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    times = svg.datum()[0].values.map(function (value) {
+    times = svg.datum().values.map(function (value) {
       return value.x;
     });
 
@@ -120,10 +120,8 @@ foo.chart = function (svg, opts) {
     xScale = d3.scale.ordinal()
       .domain(d3.range(times.length));
 
-    yMax = d3.max(times.map(function (value, i) {
-      return svg.datum().reduce(function (a, b) {
-        return a + b.values[i].y;
-      }, 0);
+    yMax = d3.max(svg.datum().values.map(function (value) {
+      return d3.sum(value.y);
     }));
 
     yScale = d3.scale.linear()
