@@ -34,12 +34,12 @@ function preprocess(data) {
   });
 
   ret.values = data[0].values.map(function (value, i) {
-    return {
-      x: value[0],
-      y: data.map(function (layer) {
+    return [
+      value[0],
+      data.map(function (layer) {
         return layer.values[i][1];
       })
-    };
+    ];
   });
 
   return ret;
