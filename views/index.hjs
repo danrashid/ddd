@@ -10,10 +10,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="columns small-4">
+      <div class="columns small-2">
         <ul id="legend" class="no-bullet"></ul>
       </div>
-      <div class="columns small-8">
+      <div class="columns small-10">
         <svg id="stack" />
       </div>
     </div>

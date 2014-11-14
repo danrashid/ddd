@@ -2469,13 +2469,13 @@ label input {
   fill: Gainsboro;
 }
 .group:hover .bar, .group[aria-expanded="true"] .bar {
-  fill: DarkCyan;
+  fill-opacity: 1;
 }
 .group.pending .bar {
-  fill: Aquamarine;
+  fill-opacity: 0.5;
 }
 .group.pending .bar:hover, .group.pending .bar[aria-expanded="true"] {
-  fill: MediumSeaGreen;
+  fill-opacity: 0.75;
 }
 
 .hotspot {
@@ -2483,7 +2483,7 @@ label input {
 }
 
 .bar {
-  fill: Turquoise;
+  fill-opacity: 0.75;
 }
 
 .axis {

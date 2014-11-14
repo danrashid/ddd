@@ -26,16 +26,16 @@ label input {
       fill: Gainsboro;
     }
     .bar {
-      fill: DarkCyan;
+      fill-opacity: 1;
     }
   }
 
   &.pending .bar {
-    fill: Aquamarine;
+    fill-opacity: 0.5;
 
     &:hover,
     &[aria-expanded="true"] {
-      fill: MediumSeaGreen;
+      fill-opacity: 0.75;
     }
   }
 }
@@ -45,7 +45,7 @@ label input {
 }
 
 .bar {
-  fill: Turquoise;
+  fill-opacity: 0.75;
 }
 
 .axis {

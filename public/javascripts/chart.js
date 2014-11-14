@@ -23,23 +23,36 @@ foo.chart = function (svg, opts) {
       .attr({
         class: 'hotspot',
         debug: function (d) {
-          return d[0] + ',' + d[1];
+          return [d[0]].concat(d[1]).join(',');
         },
         height: height
       });
   }
 
   function appendBars(g) {
-    g.append('rect')
-      .attr({
-        class: 'bar',
-        y: function (d) {
-          return yScale(d[1]);
-        },
-        height: function (d) {
-          return height - yScale(d[1]);
-        }
-      });
+    g.selectAll('.bar')
+      .data(function (d) {
+        return d[1];
+      })
+      .enter().append('rect')
+        .attr({
+          class: 'bar',
+          y: function (d, i, a) {
+            var groupValues = g.data()[a][1],
+              y = yScale(d);
+
+            while (i > 0) {
+              y -= height - yScale(groupValues[--i]);
+            }
+            return y;
+          },
+          height: function (d) {
+            return height - yScale(d);
+          },
+          fill: function (d, i) {
+            return svg.datum().layers[i].color;
+          }
+        });
   }
 
   function sizeRects(g) {
