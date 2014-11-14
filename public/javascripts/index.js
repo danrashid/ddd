@@ -11,6 +11,8 @@ $(function () {
       .call(foo.chart, {
         tooltipId: tooltipId
       });
+
+    $('#legend').html(templates.legend.render(res));
   });
 
   $.get('/stats/?max=1000', function (res) {
@@ -36,14 +38,6 @@ $(function () {
         tooltipId: tooltipId
       });
   });
-
-  $('#legend').html(templates.things.render({
-    things: [
-      {id: 'foo'},
-      {id: 'bar'},
-      {id: 'baz'}
-    ]
-  }));
 
   $(document).on('click', 'svg [data-dropdown]', function () {
     tooltip.populate(this, function (datum) {
