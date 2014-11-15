@@ -6,15 +6,21 @@ $(function () {
     tooltip = foo.tooltip(tooltipId);
 
   $.get('/stats/?layers=3', function (res) {
-    d3.select('#stack')
-      .datum(res)
-      .call(foo.chart, {
+    var stack = foo.chart(d3.select('#stack').datum(res), {
         tooltipId: tooltipId
       });
 
-    $('#legend').html(templates.legend.render({
-      res: res
-    }));
+    $('#legend')
+      .html(templates.legend.render({
+        res: res
+      }))
+      .on('click', 'input', function () {
+        var $input = $(this),
+          guid = $input.data('guid'),
+          hidden = !$input.is(':checked');
+
+        stack.toggleLayer(guid, hidden);
+      });
   });
 
   $.get('/stats/?max=1000', function (res) {

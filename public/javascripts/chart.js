@@ -65,17 +65,26 @@ foo.chart = function (svg, opts) {
       .data(function (d) {
         return d.values;
       })
-      .enter().append('rect')
-        .each(function (d, i, a) {
-          var hidden = d3.select(g[0][a]).classed('hidden'),
-            barHeight = hidden ? 0 : height - yScale(d[1]),
-            lastY = a > 0 ? g[0][a - 1].children[i].getAttribute('y') : height;
+      .enter().append('rect');
 
-          d3.select(this).attr({
-            y: hidden ? lastY : lastY - barHeight,
-            height: barHeight
-          });
+    toggleBars(g);
+  }
+
+  function toggleBars(g) {
+    g.each(function (layerD, layerI) {
+      var layer = d3.select(this),
+        hidden = layer.classed('hidden');
+
+      layer.selectAll('rect').each(function (d, i) {
+        var barHeight = hidden ? 0 : height - yScale(d[1]),
+          prevY = layerI > 0 ? g[0][layerI - 1].children[i].getAttribute('y') : height;
+
+        d3.select(this).attr({
+          y: hidden ? prevY : prevY - barHeight,
+          height: barHeight
         });
+      });
+    });
   }
 
   function sizeRects(svg) {
@@ -95,12 +104,7 @@ foo.chart = function (svg, opts) {
         return d;
       })
       .enter().append('g')
-        .classed({
-          layer: 'true',
-          hidden: function (d, i) {
-            return i === 1;
-          }
-        })
+        .classed('layer', true)
         .attr({
           fill: function (d) {
             return d.color;
@@ -137,6 +141,13 @@ foo.chart = function (svg, opts) {
     xScale.rangeRoundBands([0, width], opts.barSpacing);
   }
 
+  function toggleLayer(guid, hidden) {
+    svg.select('g.layer[guid="' + guid + '"]')
+      .classed('hidden', hidden);
+
+    toggleBars(svg.selectAll('g.layer'));
+  }
+
   (function () {
     times = svg.datum()[0].values.map(function (v) {
       return v[0];
@@ -145,8 +156,6 @@ foo.chart = function (svg, opts) {
     interval = times[1] - times[0];
 
     height = $(svg.node()).height() - opts.verticalMargin * 2;
-
-    console.log(height);
 
     xScale = d3.scale.ordinal()
       .domain(d3.range(times.length));
@@ -181,4 +190,8 @@ foo.chart = function (svg, opts) {
         .call(sizeAxis);
     });
   })();
+
+  return {
+    toggleLayer: toggleLayer
+  };
 };
