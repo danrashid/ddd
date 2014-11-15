@@ -36,7 +36,18 @@ foo.chart = function (svg, opts) {
       .attr('transform', 'translate(0,' + opts.verticalMargin + ')')
       .selectAll('rect')
         .data(function (d) {
-          return d[0].values;
+          return d[0].values.map(function (v, i) {
+            return {
+              start: v[0],
+              layers: d.map(function (layer) {
+                return {
+                  id: layer.id,
+                  color: layer.color,
+                  value: layer.values[i][1]
+                };
+              })
+            };
+          });
         })
         .enter().append('rect')
           .attr({

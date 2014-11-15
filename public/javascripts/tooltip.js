@@ -11,8 +11,8 @@ foo.tooltip = function (tooltipId) {
     var datum = d3.select(trigger).datum(),
       interval = +$(trigger).closest('svg').attr('interval'),
       defaults = {
-        from: (new Date(datum[0])).toLocaleString(),
-        to: (new Date(datum[0] + interval)).toLocaleString()
+        start: (new Date(datum.start)).toLocaleString(),
+        end: (new Date(datum.start + interval)).toLocaleString()
       },
       overrides = callback ? callback(datum) : {},
       values = $.extend(defaults, overrides);

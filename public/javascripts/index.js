@@ -44,7 +44,7 @@ $(function () {
   $(document).on('click', 'svg [data-dropdown]', function () {
     tooltip.populate(this, function (datum) {
       return {
-        info: datum[1] + ' things'
+        layers: datum.layers
       };
     });
   });
