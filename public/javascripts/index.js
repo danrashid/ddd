@@ -12,7 +12,9 @@ $(function () {
         tooltipId: tooltipId
       });
 
-    $('#legend').html(templates.legend.render(res));
+    $('#legend').html(templates.legend.render({
+      res: res
+    }));
   });
 
   $.get('/stats/?max=1000', function (res) {

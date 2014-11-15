@@ -13,38 +13,6 @@ var colors = [
   '#17becf'
 ];
 
-function yTotal(layer) {
-  return layer.values.reduce(function (a, b) {
-    return a + b[1];
-  }, 0);
-}
-
-function preprocess(data) {
-  var ret = {};
-
-  data.sort(function (a, b) {
-    return yTotal(b) - yTotal(a);
-  });
-
-  ret.layers = data.map(function (layer) {
-    return {
-      id: layer.id,
-      color: layer.color
-    };
-  });
-
-  ret.values = data[0].values.map(function (value, i) {
-    return [
-      value[0],
-      data.map(function (layer) {
-        return layer.values[i][1];
-      })
-    ];
-  });
-
-  return ret;
-}
-
 /* GET stats. */
 router.get('/', function(req, res) {
   var layers = +req.query.layers || 1,
@@ -70,7 +38,8 @@ router.get('/', function(req, res) {
     data.push(layer);
     layers -= 1;
   }
-  res.send(preprocess(data));
+
+  res.send(data);
 });
 
 module.exports = router;

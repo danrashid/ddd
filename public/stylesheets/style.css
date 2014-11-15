@@ -2478,8 +2478,12 @@ label input {
   fill-opacity: 0.75;
 }
 
-.hotspot {
+.background rect {
   fill: WhiteSmoke;
+}
+
+.hotspots rect {
+  fill-opacity: 0;
 }
 
 .bar {

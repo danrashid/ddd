@@ -40,8 +40,12 @@ label input {
   }
 }
 
-.hotspot {
+.background rect {
   fill: WhiteSmoke;
+}
+
+.hotspots rect {
+  fill-opacity: 0;
 }
 
 .bar {

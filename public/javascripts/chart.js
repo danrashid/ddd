@@ -18,83 +18,83 @@ foo.chart = function (svg, opts) {
     yMax,
     yScale;
 
-  function appendHotspots(g) {
-    g.append('rect')
-      .attr({
-        class: 'hotspot',
-        debug: function (d) {
-          return [d[0]].concat(d[1]).join(',');
-        },
-        height: height
-      });
+  function appendBackground(svg) {
+    svg.append('g')
+      .classed('background', true)
+      .selectAll('rect')
+        .data(function (d) {
+          return d[0].values;
+        })
+        .enter().append('rect')
+          .attr('height', height);
+  }
+
+  function appendHotspots(svg) {
+    svg.append('g')
+      .classed('hotspots', true)
+      .selectAll('rect')
+        .data(function (d) {
+          return d[0].values;
+        })
+        .enter().append('rect')
+          .attr({
+            'height': height,
+            'data-dropdown': opts.tooltipId,
+            'aria-controls': opts.tooltipId,
+            'aria-expanded': 'false'
+          });
+
+    Foundation.libs.dropdown.init($(opts.tooltipId));
   }
 
   function appendBars(g) {
-    g.selectAll('.bar')
+    g.selectAll('rect')
       .data(function (d) {
-        return d[1];
+        return d.values;
       })
       .enter().append('rect')
         .attr({
-          class: 'bar',
           y: function (d, i, a) {
-            var groupValues = g.data()[a][1],
-              y = yScale(d);
+            var y0 = 0;
 
-            while (i > 0) {
-              y -= height - yScale(groupValues[--i]);
+            while (a > 0) {
+              y0 += height - yScale(g.data()[--a].values[i][1]);
             }
-            return y;
+            return yScale(d[1]) - y0;
           },
           height: function (d) {
-            return height - yScale(d);
-          },
-          fill: function (d, i) {
-            return svg.datum().layers[i].color;
+            return height - yScale(d[1]);
           }
         });
   }
 
-  function sizeRects(g) {
-    g.selectAll('rect')
-      .attr('width', xScale.rangeBand());
+  function sizeRects(svg) {
+    svg.selectAll('g')
+      .selectAll('rect')
+        .attr({
+          x: function (d, i) {
+            return xScale(i);
+          },
+          width: xScale.rangeBand()
+        });
   }
 
-  function appendGroups(svg) {
-    var now = +(new Date());
-
-    svg.selectAll('.group')
+  function appendLayers(svg) {
+    svg.selectAll('g.layer')
       .data(function (d) {
-        return d.values;
+        return d;
       })
       .enter().append('g')
+        .classed('layer', true)
         .attr({
-          'data-dropdown': opts.tooltipId,
-          'aria-controls': opts.tooltipId,
-          'aria-expanded': 'false'
-        })
-        .classed({
-          group: true,
-          pending: function (d) {
-            return now < d[0] + interval;
+          fill: function (d) {
+            return d.color;
+          },
+          guid: function (d) {
+            return d.id;
           }
         })
-        .call(appendHotspots)
         .call(appendBars);
-
-    if (opts.tooltipId) {
-      Foundation.libs.dropdown.init($(opts.tooltipId));
-    }
-
-    sizeGroups(svg);
-  }
-
-  function sizeGroups(svg) {
-    svg.selectAll('.group')
-      .attr('transform', function (d, i) {
-        return 'translate(' + xScale(i) + ',' + opts.verticalMargin + ')';
-      })
-      .call(sizeRects);
   }
 
   function appendAxis(svg) {
@@ -122,8 +122,8 @@ foo.chart = function (svg, opts) {
   }
 
   (function () {
-    times = svg.datum().values.map(function (value) {
-      return value[0];
+    times = svg.datum()[0].values.map(function (v) {
+      return v[0];
     });
 
     interval = times[1] - times[0];
@@ -133,8 +133,10 @@ foo.chart = function (svg, opts) {
     xScale = d3.scale.ordinal()
       .domain(d3.range(times.length));
 
-    yMax = d3.max(svg.datum().values.map(function (value) {
-      return d3.sum(value[1]);
+    yMax = d3.max(times.map(function (time, i) {
+      return d3.sum(svg.datum().map(function (d) {
+        return d.values[i][1];
+      }));
     }));
 
     yScale = d3.scale.linear()
@@ -144,13 +146,20 @@ foo.chart = function (svg, opts) {
     svg
       .attr('interval', interval)
       .call(setWidths)
-      .call(appendGroups)
+      .call(appendBackground)
+      .call(appendLayers)
       .call(appendAxis);
+
+    if (opts.tooltipId) {
+      svg.call(appendHotspots);
+    }
+
+    svg.call(sizeRects);
 
     $(window).on('resize', function () {
       svg
         .call(setWidths)
-        .call(sizeGroups)
+        .call(sizeRects)
         .call(sizeAxis);
     });
   })();
