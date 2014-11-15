@@ -21,6 +21,7 @@ foo.chart = function (svg, opts) {
   function appendBackground(svg) {
     svg.append('g')
       .classed('background', true)
+      .attr('transform', 'translate(0,' + opts.verticalMargin + ')')
       .selectAll('rect')
         .data(function (d) {
           return d[0].values;
@@ -32,6 +33,7 @@ foo.chart = function (svg, opts) {
   function appendHotspots(svg) {
     svg.append('g')
       .classed('hotspots', true)
+      .attr('transform', 'translate(0,' + opts.verticalMargin + ')')
       .selectAll('rect')
         .data(function (d) {
           return d[0].values;
@@ -92,7 +94,8 @@ foo.chart = function (svg, opts) {
           },
           guid: function (d) {
             return d.id;
-          }
+          },
+          transform: 'translate(0,' + opts.verticalMargin + ')'
         })
         .call(appendBars);
   }
