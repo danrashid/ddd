@@ -66,18 +66,15 @@ foo.chart = function (svg, opts) {
         return d.values;
       })
       .enter().append('rect')
-        .attr({
-          y: function (d, i, a) {
-            var y0 = 0;
+        .each(function (d, i, a) {
+          var hidden = d3.select(g[0][a]).classed('hidden'),
+            barHeight = hidden ? 0 : height - yScale(d[1]),
+            lastY = a > 0 ? g[0][a - 1].children[i].getAttribute('y') : height;
 
-            while (a > 0) {
-              y0 += height - yScale(g.data()[--a].values[i][1]);
-            }
-            return yScale(d[1]) - y0;
-          },
-          height: function (d) {
-            return height - yScale(d[1]);
-          }
+          d3.select(this).attr({
+            y: hidden ? lastY : lastY - barHeight,
+            height: barHeight
+          });
         });
   }
 
@@ -98,7 +95,12 @@ foo.chart = function (svg, opts) {
         return d;
       })
       .enter().append('g')
-        .classed('layer', true)
+        .classed({
+          layer: 'true',
+          hidden: function (d, i) {
+            return i === 1;
+          }
+        })
         .attr({
           fill: function (d) {
             return d.color;
@@ -143,6 +145,8 @@ foo.chart = function (svg, opts) {
     interval = times[1] - times[0];
 
     height = $(svg.node()).height() - opts.verticalMargin * 2;
+
+    console.log(height);
 
     xScale = d3.scale.ordinal()
       .domain(d3.range(times.length));
