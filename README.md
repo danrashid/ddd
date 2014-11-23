@@ -3,6 +3,11 @@ ddd
 
 A d3 bar chart that resizes with the window
 
+This is old
+-----------
+
+Check out https://github.com/danrashid/rockso instead.
+
 Running it
 ----------
 
